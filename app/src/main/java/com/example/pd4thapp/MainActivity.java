@@ -95,7 +95,16 @@ public class MainActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                AllRSSFeed category = allRSSObjs.get(position);
+                String catTitle = category.getTitle();
+                String catUrl = category.getXmlUrl();
+
                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                intent.putExtra("title", catTitle);
+                intent.putExtra("url", catUrl);
+
+                Log.i("MainActivity", catTitle + ": " + catUrl);
+
                 startActivity(intent);
             }
         });
