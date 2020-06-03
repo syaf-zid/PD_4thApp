@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -66,6 +67,21 @@ public class SecondActivity extends AppCompatActivity {
 
         ArticleInfoGrabber grabber = new ArticleInfoGrabber();
         grabber.execute(articleArray);
+
+        lvInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                ReadXMLFile link = articleInfoList.get(position);
+                String url = link.getLink();
+
+                Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
+                intent.putExtra("url", url);
+
+                Log.i("MainActivity", url);
+
+                startActivity(intent);
+            }
+        });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override

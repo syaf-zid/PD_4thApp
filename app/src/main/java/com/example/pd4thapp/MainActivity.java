@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         getTopic();
+        registerForContextMenu(lv);
 
         btnRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,6 +163,31 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("topic" + i, topic);
             editor.commit();
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        super.onContextItemSelected(item);
+        switch (item.getItemId()) {
+            case (R.id.itemDelete): {
+                AdapterView.AdapterContextMenuInfo menuInfo;
+                menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                int index = menuInfo.position;
+                allRSSObjs.remove(index);
+                selectedRSSTopic.remove(selectedRSSTopic.get(index));
+                allRSSTopicList.remove(allRSSTopicList.get(index));
+                aa.notifyDataSetChanged();
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private class RSSInfoGrabber extends AsyncTask<String, Integer, String> {
