@@ -220,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.i("Main Activity", link);
 
                             allRSSTopicList.add(title);
+                            allRSSObjs.add(new AllRSSFeed(title, link));
                             al.add(new AllRSSFeed(title, link));
                         }
                     }

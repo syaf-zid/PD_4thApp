@@ -47,6 +47,8 @@ public class SecondActivity extends AppCompatActivity {
         title = intent.getStringExtra("title");
         xmlUrl = intent.getStringExtra("url");
 
+        Log.i("SecondActivity", title + ": " + xmlUrl);
+
         tvTitle = findViewById(R.id.textViewCategory);
         lvInfo = findViewById(R.id.listViewInfo);
         btnBack = findViewById(R.id.buttonBack);
@@ -97,26 +99,41 @@ public class SecondActivity extends AppCompatActivity {
                     NodeList itemNodeList = channelElement.getElementsByTagName("item");
                     for(int i = 0; i < itemNodeList.getLength(); i++) {
                         if(itemNodeList.item(i).getNodeType() == Node.ELEMENT_NODE) {
+                            String pubDate = null, title = null, link = null, desc = null;
+
                             Node itemNode = itemNodeList.item(i);
                             Element itemElement = (Element) itemNode;
 
                             NodeList pubDateNodeList = channelElement.getElementsByTagName("pubDate");
                             Element pubDateElement = (Element) pubDateNodeList.item(0);
-                            String pubDate = pubDateElement.getTextContent();
+                            if(pubDateElement.getTextContent() != null) {
+                                pubDate = pubDateElement.getTextContent();
+                            }
 
                             NodeList titleNodeList = itemElement.getElementsByTagName("title");
                             Element titleElement = (Element) titleNodeList.item(0);
-                            String title = titleElement.getTextContent();
+                            if(titleElement.getTextContent() != null) {
+                                title = titleElement.getTextContent();
+                            }
 
                             NodeList linkNodeList = itemElement.getElementsByTagName("link");
                             Element linkElement = (Element) linkNodeList.item(0);
-                            String link = linkElement.getTextContent();
+                            if(linkElement.getTextContent() != null) {
+                                link = linkElement.getTextContent();
+                            }
 
                             NodeList descNodeList = itemElement.getElementsByTagName("description");
-                            Element descElement = (Element) descNodeList.item(0);
-                            String desc = descElement.getTextContent();
+                            if(descNodeList.item(0) != null) {
+                                Element descElement = (Element) descNodeList.item(0);
+                                Log.i("SecondActivity", descElement.getTextContent().substring(33, descElement.getTextContent().length() - 1));
+                                desc = descElement.getTextContent().substring(33, descElement.getTextContent().length() - 1);
+                            }
 
-                            al.add(new ReadXMLFile(pubDate, title, desc, link));
+                            if(pubDate != null && title != null && desc != null && link != null) {
+                                al.add(new ReadXMLFile(pubDate, title, desc, link));
+                            } else {
+                                al.add(new ReadXMLFile(pubDate, title, "", link));
+                            }
                         }
                     }
                 }
