@@ -70,14 +70,6 @@ public class MainActivity extends AppCompatActivity {
                 allRSSTopicList.add(selected);
                 allRSSObjs.add(new AllRSSFeed(selected, "Please refresh"));
                 aa.notifyDataSetChanged();
-
-                String[] topicArray = new String[selectedRSSTopic.size()];
-                for(int i = 0; i < selectedRSSTopic.size(); i++) {
-                    topicArray[i] = selectedRSSTopic.get(i);
-                }
-
-                RSSInfoGrabber grabber = new RSSInfoGrabber();
-                grabber.execute(topicArray);
             }
         });
 
