@@ -53,6 +53,8 @@ public class SecondActivity extends AppCompatActivity {
         lvInfo = findViewById(R.id.listViewInfo);
         btnBack = findViewById(R.id.buttonBack);
 
+        tvTitle.setText(title);
+
         articleInfoList = new ArrayList<>();
         aa = new CustomArrayAdapter(this, R.layout.row, articleInfoList);
         lvInfo.setAdapter(aa);
@@ -105,20 +107,20 @@ public class SecondActivity extends AppCompatActivity {
                             Element itemElement = (Element) itemNode;
 
                             NodeList pubDateNodeList = channelElement.getElementsByTagName("pubDate");
-                            Element pubDateElement = (Element) pubDateNodeList.item(0);
-                            if(pubDateElement.getTextContent() != null) {
+                            if(pubDateNodeList.item(0) != null) {
+                                Element pubDateElement = (Element) pubDateNodeList.item(0);
                                 pubDate = pubDateElement.getTextContent();
                             }
 
                             NodeList titleNodeList = itemElement.getElementsByTagName("title");
-                            Element titleElement = (Element) titleNodeList.item(0);
-                            if(titleElement.getTextContent() != null) {
+                            if(titleNodeList.item(0) != null) {
+                                Element titleElement = (Element) titleNodeList.item(0);
                                 title = titleElement.getTextContent();
                             }
 
                             NodeList linkNodeList = itemElement.getElementsByTagName("link");
-                            Element linkElement = (Element) linkNodeList.item(0);
-                            if(linkElement.getTextContent() != null) {
+                            if(linkNodeList.item(0) != null) {
+                                Element linkElement = (Element) linkNodeList.item(0);
                                 link = linkElement.getTextContent();
                             }
 
@@ -155,6 +157,10 @@ public class SecondActivity extends AppCompatActivity {
                         articleInfoList.add(obj);
                     }
                 }
+            }
+
+            if(articleInfoList.size() == 0) {
+                articleInfoList.addAll(al);
             }
 
             return null;

@@ -13,6 +13,8 @@ public class CustomArrayAdapter extends ArrayAdapter<ReadXMLFile> {
     private Context context;
     private ArrayList<ReadXMLFile> rssInfoList;
     private int resource;
+    TextView tvTitle, tvDesc, tvLink, tvPubDate;
+    String title, desc, link, pubDate;
 
     public CustomArrayAdapter(Context context, int resource, ArrayList<ReadXMLFile> objects) {
         super(context, resource, objects);
@@ -29,13 +31,11 @@ public class CustomArrayAdapter extends ArrayAdapter<ReadXMLFile> {
 
         ReadXMLFile data = rssInfoList.get(position);
 
-        TextView tvTitle, tvDesc, tvLink, tvPubDate;
         tvTitle = rowView.findViewById(R.id.textViewTitle);
         tvDesc = rowView.findViewById(R.id.textViewDesc);
         tvLink = rowView.findViewById(R.id.textViewLink);
         tvPubDate = rowView.findViewById(R.id.textViewPubDate);
 
-        String title, desc, link, pubDate;
         title = data.getTitle();
         desc = data.getDescription();
         link = data.getLink();
